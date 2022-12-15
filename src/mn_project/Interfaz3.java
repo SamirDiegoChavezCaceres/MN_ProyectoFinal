@@ -126,6 +126,7 @@ public class Interfaz3 extends javax.swing.JFrame {
         rCuadradoTextField = new javax.swing.JTextField();
         evaluarButton = new javax.swing.JButton();
         nombreArchivoLabel = new javax.swing.JLabel();
+        parseComboBox = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -230,13 +231,15 @@ public class Interfaz3 extends javax.swing.JFrame {
 
         nombreArchivoLabel.setText("Ninguna");
 
+        parseComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ninguno", ";", ",", " ", "\\t", "." }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(PredictionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -286,9 +289,12 @@ public class Interfaz3 extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(fechaCheckBox, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(fechaCheckBox)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(parseComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addComponent(nombreArchivoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(11, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -306,7 +312,9 @@ public class Interfaz3 extends javax.swing.JFrame {
                                 .addGap(7, 7, 7)
                                 .addComponent(jLabel3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(fechaCheckBox)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(fechaCheckBox)
+                                    .addComponent(parseComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(10, 10, 10)
                         .addComponent(jLabel5)
                         .addGap(6, 6, 6)
@@ -326,13 +334,12 @@ public class Interfaz3 extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(nGradoTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(polinomialText))
-                                .addGap(6, 6, 6))
+                                    .addComponent(polinomialText)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(PredictionButton, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(operacionesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addComponent(operacionesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9)
                         .addGap(3, 3, 3)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -364,21 +371,25 @@ public class Interfaz3 extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void TrainButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TrainButtonActionPerformed
-        selectDataFile();
-        cotaInferiorTextField.setEnabled(true);
-        cotaSuperiorTextField.setEnabled(true);
-        try {
-            String str2 = cotaSuperiorTextField.getText();
-            String str1 = cotaInferiorTextField.getText();
-            if(fechaCheckBox.isSelected()){
-                mostradorCotaInferior.setText(""+xS.get(Integer.parseInt(str1)-1)); 
-                mostradorCotaSuperior.setText(""+xS.get(Integer.parseInt(str2)-1)); 
-            }else{
-                mostradorCotaInferior.setText(""+x.get(Integer.parseInt(str1)-1));
-                mostradorCotaSuperior.setText(""+x.get(Integer.parseInt(str2)-1));
+        if(parseComboBox.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(null, "Seleccione un metodo de parse"); 
+        } else {
+            selectDataFile();
+            cotaInferiorTextField.setEnabled(true);
+            cotaSuperiorTextField.setEnabled(true);
+            try {
+                String str2 = cotaSuperiorTextField.getText();
+                String str1 = cotaInferiorTextField.getText();
+                if(fechaCheckBox.isSelected()){
+                    mostradorCotaInferior.setText(""+xS.get(Integer.parseInt(str1)-1)); 
+                    mostradorCotaSuperior.setText(""+xS.get(Integer.parseInt(str2)-1)); 
+                }else{
+                    mostradorCotaInferior.setText(""+x.get(Integer.parseInt(str1)-1));
+                    mostradorCotaSuperior.setText(""+x.get(Integer.parseInt(str2)-1));
+                }
+            } catch (Exception ex) {
+                //
             }
-        } catch (Exception ex) {
-            //
         }
     }//GEN-LAST:event_TrainButtonActionPerformed
 
@@ -518,6 +529,7 @@ public class Interfaz3 extends javax.swing.JFrame {
     private javax.swing.JTextField nGradoTextField;
     private javax.swing.JLabel nombreArchivoLabel;
     private javax.swing.JComboBox<String> operacionesComboBox;
+    private javax.swing.JComboBox<String> parseComboBox;
     private javax.swing.JLabel polinomialText;
     private javax.swing.JLabel rCuadradoLabel;
     private javax.swing.JTextField rCuadradoTextField;
@@ -526,6 +538,7 @@ public class Interfaz3 extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private void selectDataFile() {
         JFileChooser chooser = new JFileChooser();
+        String parse = (String) parseComboBox.getSelectedItem();
         // optionally set chooser options ...
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             f = chooser.getSelectedFile();
@@ -534,7 +547,7 @@ public class Interfaz3 extends javax.swing.JFrame {
                 int row = 0;
                 String line = br.readLine();
                 while(line != null){
-                    String[] str = line.split(";");
+                    String[] str = line.split(parse);
                     if(row == 0) {
                         xName = str[0];
                         yName = str[1];
@@ -555,10 +568,14 @@ public class Interfaz3 extends javax.swing.JFrame {
                 //limpiarlo
             } catch(FileNotFoundException e){
                 System.err.println("Can't find: " + f +"\n");
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "No puedo encontrar el archivo");
             } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Error leendo lineas");
                 Logger.getLogger(Interfaz3.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            } catch (Exception ex){
+                JOptionPane.showMessageDialog(null, "Error!");
+                Logger.getLogger(Interfaz3.class.getName()).log(Level.SEVERE, null, ex);
+            }
             nombreArchivoLabel.setText(f.getName());
         } else {
             // user changed their mind
