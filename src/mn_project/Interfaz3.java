@@ -7,7 +7,6 @@ package mn_project;
 
 import java.io.*;
 import javax.swing.*;
-import com.mathworks.engine.*;
 import com.mathworks.toolbox.javabuilder.*;
 import java.text.*;
 import java.util.*;
@@ -628,7 +627,7 @@ public class Interfaz3 extends javax.swing.JFrame {
                     f = f + funciones.get(i) +"\n";
                 }
                 funcionTextArea.setText(f);
-            } catch (MWException ex) {
+            } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, ("Muchos datos para el spline"));
             }
         } else if (operacionesComboBox.getSelectedIndex() == 2) {
